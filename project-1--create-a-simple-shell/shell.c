@@ -29,9 +29,11 @@ int main() {
   
     // Stores the tokenized command line input.
     char *arguments[MAX_COMMAND_LINE_ARGS];
+    char *newenv[MAX_COMMAND_LINE_ARGS];
     int i = 0;
     int j = 0;
     int k = 0;
+    int n = 0;
     bool isBackground = false;
   
     while (true) {
@@ -124,9 +126,14 @@ int main() {
           //getenv(arguments[1])
           printf("%s\n",getenv(arguments[1]));
         }
-        else if (strcmp(arguments[0], "setenv")==0){
-          
-          printf("setenv function\n");
+        else if (strcmp(arguments[0], "setenv") == 0){
+          newenv[n] = strtok(arguments[1], " = ");
+          while(newenv[n] != NULL){
+            printf("newenv [%d] = %s \n", n, newenv[n]);
+            n++;
+            newenv[n] = strtok(NULL, " = ");
+          }
+          setenv(newenv[0], newenv[1], 1);
         }
         else {
           if (strcmp(arguments[i-1], "&") == 0){
